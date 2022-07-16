@@ -234,6 +234,12 @@ void Adafruit_ST7735::initR(uint8_t options) {
     displayInit(Rcmd2green160x80);
     _colstart = 24;
     _rowstart = 0;
+  } else if (options == INITR_MINI160x80_B) {
+    _height = ST7735_TFTWIDTH_80;
+    _width = ST7735_TFTHEIGHT_160;
+    displayInit(Rcmd2green160x80);
+    _colstart = 26;
+    _rowstart = 1;
   } else {
     // colstart, rowstart left at default '0' values
     displayInit(Rcmd2red);
@@ -241,7 +247,7 @@ void Adafruit_ST7735::initR(uint8_t options) {
   displayInit(Rcmd3);
 
   // Black tab, change MADCTL color filter
-  if ((options == INITR_BLACKTAB) || (options == INITR_MINI160x80)) {
+  if ((options == INITR_BLACKTAB) || (options == INITR_MINI160x80) || (options == INITR_MINI160x180_B)) {
     uint8_t data = 0xC0;
     sendCommand(ST77XX_MADCTL, &data, 1);
   }
@@ -250,6 +256,8 @@ void Adafruit_ST7735::initR(uint8_t options) {
     // Hallowing is simply a 1.44" green tab upside-down:
     tabcolor = INITR_144GREENTAB;
     setRotation(2);
+  } else if options == INITR_MINI160x180_B) {
+    tabcolor = INITR_MINI160x80 ;
   } else {
     tabcolor = options;
     setRotation(0);
